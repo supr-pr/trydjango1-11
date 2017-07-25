@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} MuyPicky.com
+				{% endblock title %} </title>
+				{% include 'snippets/css.html' %}
+</head>
+<body>
+			<h3>Function Based View</h3>
+			<h3>Muypicky.com</h3>
+
+
+			<div class="container">
+			{% include 'snippets/nav.html' %}
+				{% block content %}
+					
+
+
+				{% endblock content %}
+			</div>
+		{% include 'snippets/js.html' %}
+</body>
+</html>
