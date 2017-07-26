@@ -16,12 +16,25 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic import TemplateView
-from resturants.views import HomeView, AboutView, ContactView
+
+from resturants.views import (
+	resturant_listview,
+	ResturantListView,
+	ResturantDetailView,
+
+)
+
+# from resturants.views import HomeView, AboutView, ContactView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^$', TemplateView.as_view(template_name='home.html')),
+    # url(r'^resturants/$', resturant_listview),
+    url(r'^resturants/$', ResturantListView.as_view()),
+    # url(r'^resturants/<(?P<slug>\w+$', ResturantListView.as_view()),
+    url(r'^resturants/(?P<rest_id>\w+)/$', ResturantDetailView.as_view()),
+    # url(r'^resturants/mexican/$', MexicanresturantListView.as_view()),
+    # url(r'^resturants/asian/$', AsianresturantListView.as_view()),
     url(r'^about/$', TemplateView.as_view(template_name='about.html')),
-    url(r'^contact/$', ContactView.as_view(), name='contact'),
-    
-]
+    url(r'^contact/$', TemplateView.as_view(template_name='contact.html')),
+    ]
