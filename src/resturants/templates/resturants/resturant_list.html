@@ -5,8 +5,8 @@
 
 <ul>
 	{% for obj in object_list %}
-		<li>{{ obj }}<br/>
-		{{ obj.name }} {{ obj.location }} {{ obj.categories }} {{ obj.timestamp }} {{ obj.updated }} </li>
+		<li> <a href="/resturants/{{ obj.slug }}">{{ obj }} </a><br/>
+		{{ obj.name }} @ {{ obj.location }}: {{ obj.categories }} </li>
 	{% endfor %}
 
 </ul>

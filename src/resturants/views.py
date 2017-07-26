@@ -12,22 +12,22 @@ from django.db.models import Q
 # Function based view
 
 def resturant_listview (request):
-	template_name = 'resturants/resturants_list.html'
+	template_name = 'resturants/resturant_list.html'
 	queryset = Resturant.objects.all()
 	context ={
 		"object_list": queryset
 	}
 	return render(request, template_name,context)
 
-class ResturantListView (ListView):
-	template_name = 'resturants/resturants_list.html'
+class ResturantListView(ListView):
+	# template_name = 'resturants/resturant_list.html'
 	
-	def get_qureyset(self):
+	def get_queryset(self):
 		slug= self.kwargs.get("slug")
 		if slug:
 			queryset = Resturant.objects.filter(
-					Q(categories__iexact=slug) |
-					Q(categories__icontains=slug)
+					Q(category__iexact=slug)|
+					Q(category__icontains=slug)
 				)
 		else:
 			queryset = Resturant.objects.all()
@@ -36,10 +36,10 @@ class ResturantListView (ListView):
 class ResturantDetailView(DetailView):
 	queryset = Resturant.objects.all()
 
-	def get_object(self, *args, **kwargs):
-		rest_id = self.kwargs.get('rest_id')
-		obj = get_object_or_404(Resturant, id=rest_id)
-		return obj
+	# def get_object(self, *args, **kwargs):
+	# 	rest_id = self.kwargs.get('rest_id')
+	# 	obj = get_object_or_404(Resturant, id=rest_id)
+	# 	return obj
 
 	# def get_context_data(self, *args, **kwargs):
 
@@ -49,17 +49,17 @@ class ResturantDetailView(DetailView):
 
 # class ResturantListView (ListView):
 # 	queryset = Resturant.objects.all()
-# 	template_name = 'resturants/resturants_list.html'
+# 	template_name = 'resturants/resturant_list.html'
 
 
 # class MexicanresturantListView (ListView):
 # 	queryset = Resturant.objects.filter(categories__iexact='mexican')
-# 	template_name = 'resturants/resturants_list.html'
+# 	template_name = 'resturants/resturant_list.html'
 
 
 # class AsianresturantListView (ListView):
 # 	queryset = Resturant.objects.filter(categories__iexact='asian')
-# 	template_name = 'resturants/resturants_list.html'
+# 	template_name = 'resturants/resturant_list.html'
 
 
 
