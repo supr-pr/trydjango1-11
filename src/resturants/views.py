@@ -2,38 +2,38 @@
 # from django.views.generic.list import ListView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.shortcuts import render 
 from django.shortcuts import get_object_or_404 
 from .models import Resturant
 from django.db.models import Q
 
-from .forms import ResturantCreateForm
+from .forms import ResturantCreateForm, ResturantNewCreateForm
 
 # Create your views here.
 # Function based view
 # 
 
 def resturant_create_view(request):
+	form = ResturantNewCreateForm(request.POST or None)
+		# if request.method == "POST":
+		# 	form = ResturantCreateForm(request.POST)			
+	errors = None
 
-		# if request.method == "GET":
-		# 	print("Get Data")
-		if request.method == "POST":
-			# title = request.POST.get("title")
-			# location = request.POST.get("location")
-			# category = request.POST.get("category")
-			
-			form = ResturantCreateForm(request.POST)
-			if form.is_valid():
-				obj = Resturant.objects.create(
-					name = form.cleaned_data.get('name'),
-					location = form.cleaned_data.get('location'),
-					categories = form.cleaned_data.get('category'),
-				)
-			return HttpResponseRedirect("/resturants/")
-		template_name = 'resturants/form.html'
-		context ={}
-		return render(request, template_name,context)
+	if form.is_valid():
+		form.save()
+			# obj = Resturant.objects.create(
+			# 	name = form.cleaned_data.get('name'),
+			# 	location = form.cleaned_data.get('location'),
+			# 	categories = form.cleaned_data.get('category'),
+			# 	)
+		return HttpResponseRedirect("/resturants/")
+	if form.errors:
+		errors = form.errors
+
+	template_name = 'resturants/form.html'
+	context ={"form": form}
+	return render(request, template_name,context)
 
 
 def resturant_listview (request):
@@ -61,6 +61,12 @@ class ResturantListView(ListView):
 class ResturantDetailView(DetailView):
 	queryset = Resturant.objects.all()
 
+
+class ResturantCreateView(CreateView):
+	form_class = ResturantNewCreateForm
+	template_name = 'resturants/form.html'
+	success_url = "/resturants/"
+
 	# def get_object(self, *args, **kwargs):
 	# 	rest_id = self.kwargs.get('rest_id')
 	# 	obj = get_object_or_404(Resturant, id=rest_id)
@@ -79,8 +85,7 @@ class ResturantDetailView(DetailView):
 
 # class MexicanresturantListView (ListView):
 # 	queryset = Resturant.objects.filter(categories__iexact='mexican')
-# 	template_name = 'resturants/resturant_list.html'
-
+# 	template_name = 'resturants/resturant_list
 
 # class AsianresturantListView (ListView):
 # 	queryset = Resturant.objects.filter(categories__iexact='asian')

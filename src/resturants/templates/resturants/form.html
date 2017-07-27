@@ -4,10 +4,12 @@
 {% block content %}
 		<h1>Add Resturant</h1> 
 
-		<form method="Post">{% csrf_token %}
-			<input type="text" name="name" placeholder="Your Title"> <br/>
-			<input type="text" name="location" placeholder="Location"><br/>
-			<input type="text" name="category" placeholder="Category"><br/>
+		<form method="POST">{% csrf_token %}
+			{{ form.as_p }}
 		<button type="Submit"> Save </button>
 		</form>
 {% endblock %}
+
+	<!-- <input type="text" name="name" placeholder="Your Title"> <br/>
+			<input type="text" name="location" placeholder="Location"><br/>
+			<input type="text" name="category" placeholder="Category"><br/> -->

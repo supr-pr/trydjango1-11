@@ -21,7 +21,8 @@ from resturants.views import (
 	resturant_listview,
 	ResturantListView,
 	ResturantDetailView,
-	resturant_create_view
+	# resturant_create_view
+	ResturantCreateView
 )
 
 # from resturants.views import HomeView, AboutView, ContactView
@@ -31,7 +32,8 @@ urlpatterns = [
     # url(r'^resturants/$', resturant_listview),
     # url(r'^resturants/$', ResturantListView.as_view()),
     url(r'^resturants/$', ResturantListView.as_view()),
-    url(r'^resturants/create/$', resturant_create_view),
+    url(r'^resturants/create/$', ResturantCreateView.as_view()),
+    # url(r'^resturants/create/$', resturant_create_view),
     # url(r'^resturants/<(?P<slug>\w+$', ResturantListView.as_view()),
     url(r'^resturants/(?P<slug>[\w-]+)/$', ResturantDetailView.as_view()),
     # url(r'^resturants/mexican/$', MexicanresturantListView.as_view()),
