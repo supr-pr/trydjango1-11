@@ -20,17 +20,18 @@ from django.views.generic import TemplateView
 from resturants.views import (
 	resturant_listview,
 	ResturantListView,
-	ResturantDetailView
+	ResturantDetailView,
+	resturant_create_view
 )
 
 # from resturants.views import HomeView, AboutView, ContactView
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='home.html')),
     # url(r'^resturants/$', resturant_listview),
     # url(r'^resturants/$', ResturantListView.as_view()),
     url(r'^resturants/$', ResturantListView.as_view()),
+    url(r'^resturants/create/$', resturant_create_view),
     # url(r'^resturants/<(?P<slug>\w+$', ResturantListView.as_view()),
     url(r'^resturants/(?P<slug>[\w-]+)/$', ResturantDetailView.as_view()),
     # url(r'^resturants/mexican/$', MexicanresturantListView.as_view()),

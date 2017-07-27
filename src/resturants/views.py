@@ -1,6 +1,6 @@
 
 # from django.views.generic.list import ListView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import render 
@@ -8,8 +8,33 @@ from django.shortcuts import get_object_or_404
 from .models import Resturant
 from django.db.models import Q
 
+from .forms import ResturantCreateForm
+
 # Create your views here.
 # Function based view
+# 
+
+def resturant_create_view(request):
+
+		# if request.method == "GET":
+		# 	print("Get Data")
+		if request.method == "POST":
+			# title = request.POST.get("title")
+			# location = request.POST.get("location")
+			# category = request.POST.get("category")
+			
+			form = ResturantCreateForm(request.POST)
+			if form.is_valid():
+				obj = Resturant.objects.create(
+					name = form.cleaned_data.get('name'),
+					location = form.cleaned_data.get('location'),
+					categories = form.cleaned_data.get('category'),
+				)
+			return HttpResponseRedirect("/resturants/")
+		template_name = 'resturants/form.html'
+		context ={}
+		return render(request, template_name,context)
+
 
 def resturant_listview (request):
 	template_name = 'resturants/resturant_list.html'
